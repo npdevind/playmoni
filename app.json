@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "playmoni",
-    "slug": "playmoni",
+    "name": "PlayMoni",
+    "slug": "play_moni",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "scheme": "playmoni",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
