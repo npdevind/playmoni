@@ -18,7 +18,7 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
 
   "prettier.singleQuote": true,
-  "prettier.semi": false,
+  "prettier.semi": true,
   "prettier.trailingComma": "all",
   "prettier.arrowParens": "always",
   "prettier.printWidth": 80,
@@ -42,5 +42,6 @@
   },
   "explorer.excludeGitIgnore": true,
   "react-native-tools.reactNativeToolsLogLevel": "Info",
-  "react-native-tools.showExplorer": true
+  "react-native-tools.showExplorer": true,
+  "cSpell.words": ["Moni", "popp"]
 }

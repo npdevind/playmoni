@@ -1,16 +1,16 @@
-import { View, Text } from 'react-native'
-import React from 'react'
-import { Link } from 'expo-router'
+import { View, Text } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+import React from 'react';
+import { Link } from 'expo-router';
 
 const index = () => {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text className="text-2xl">index</Text>
-      <Link href="/profile" style={{ color: 'blue' }}>
-        Go to Profile
-      </Link>
+    <View className="flex-1 items-center justify-center bg-white">
+      <Text className="text-2xl font-poppBold">PayMoni</Text>
+      <StatusBar style="auto" />
+      <Link href="/audio">Go to Home</Link>
     </View>
-  )
-}
+  );
+};
 
-export default index
+export default index;
