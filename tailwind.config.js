@@ -9,9 +9,9 @@ module.exports = {
         poppRegular: ['Poppins-Regular', 'sans-serif'],
         poppBold: ['Poppins-Bold', 'sans-serif'],
         poppMedium: ['Poppins-Medium', 'sans-serif'],
-        // poppRegular: ['Poppins', 'sans-serif'],
+        kaushanReg: ['KaushanScript-Regular', 'sans-serif'],
       },
     },
   },
   plugins: [],
-}
+};
