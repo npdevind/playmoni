@@ -1,9 +1,9 @@
-import { StyleSheet, Text, View } from 'react-native';
 import React, { useEffect } from 'react';
 import { SplashScreen, Stack } from 'expo-router';
 import '../global.css';
 import { useFonts } from 'expo-font';
-import AudioPlayer from '@/components/appComponents/audioPlayer';
+import { ThemeProvider, useTheme } from '@/context/ThemeContext';
+import { StatusBar } from 'expo-status-bar';
 
 SplashScreen.preventAutoHideAsync(); // Prevents the splash screen from auto-hiding before the app is ready
 
@@ -24,12 +24,23 @@ const RootLayout = () => {
 
   return (
     <>
-      <Stack>
-        <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      </Stack>
+      <ThemeProvider>
+        <StatusBarWrapper />
+        <Stack>
+          <Stack.Screen name="index" options={{ headerShown: false }} />
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        </Stack>
+      </ThemeProvider>
     </>
   );
+};
+
+// Component to manage StatusBar globally
+const StatusBarWrapper = () => {
+  const { currentTheme } = useTheme();
+  const isDark = currentTheme === 'dark';
+
+  return <StatusBar style={isDark ? 'light' : 'dark'} />;
 };
 
 export default RootLayout;

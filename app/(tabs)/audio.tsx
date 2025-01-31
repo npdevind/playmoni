@@ -6,6 +6,9 @@ import { View, Text, FlatList } from 'react-native';
 import AudioPlayer from '@/components/appComponents/audioPlayer';
 import { Image } from 'expo-image';
 import defaultThumbnail from '../../assets/images/default-thumbnail.png';
+import { useTheme } from '@/context/ThemeContext';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import ScreenHeader from '@/components/appComponents/screenHeader';
 
 type AudioFile = {
   id: string;
@@ -16,15 +19,23 @@ type AudioFile = {
 
 // Helper function to map an Asset to an AudioFile
 const mapAssetToAudioFile = (asset: MediaLibrary.Asset): AudioFile => {
+  // Check if the file is an MP3, then assume an image exists
+  const imageUri = asset.uri.endsWith('.mp3')
+    ? asset.uri.replace(/\.mp3$/, '.jpg')
+    : ''; // Empty if not MP3
+
   return {
     id: asset.id,
     filename: asset.filename,
     uri: asset.uri,
-    imageUri: asset.uri ? `${asset.uri.replace(/\.mp3$/, '.jpg')}` : '', // Example logic to set imageUri
+    imageUri,
   };
 };
 
 const AudioComponent = () => {
+  const { currentTheme } = useTheme();
+  const isDark = currentTheme === 'dark';
+
   const [audioFiles, setAudioFiles] = useState<AudioFile[]>([]);
   const [permissionResponse, setPermissionResponse] = useState<any>(null);
 
@@ -118,20 +129,28 @@ const AudioComponent = () => {
     );
   }
 
+  // console.log('Audio Files:', JSON.stringify(audioFiles, null, 2));
+
   return (
-    <View className="flex-1">
+    <SafeAreaView className={`flex-1 ${isDark ? 'bg-gray-900 ' : 'bg-white'}`}>
+      <ScreenHeader title="My Music" />
       {/* Audio Files List */}
       <FlatList
         className="px-3 py-2"
         data={audioFiles}
         keyExtractor={(item) => item.id}
         renderItem={({ item, index }) => (
-          <View className="flex-row items-center gap-2 mt-1 border-b border-gray-200">
+          <View
+            className={`flex-row items-center gap-2 mt-1 border-b  ${isDark ? 'border-gray-800 ' : 'border-gray-200'}`}
+          >
             {/* Check if the thumbnail exists, otherwise show the icon */}
             {item.imageUri ? (
               <Image
                 source={{ uri: item.imageUri }}
                 style={{ width: 40, height: 40, borderRadius: 5 }}
+                // onError={(e) => {
+                //   console.error('Image loading error:', e);
+                // }}
               />
             ) : (
               <Image
@@ -140,7 +159,7 @@ const AudioComponent = () => {
               />
             )}
             <Text
-              className={`font-poppMedium text-md w-80 ${currentIndex === index ? 'text-blue-500' : 'text-black'}`}
+              className={`font-poppMedium text-md w-80 ${currentIndex === index ? 'text-blue-500' : isDark ? 'text-gray-300 ' : 'text-black'}`}
               numberOfLines={1} // This ensures text is truncated after one line
               // ellipsizeMode="tail" // Adds '...' at the end if the text is truncated
               onPress={() => playAudio(item.uri, index)} // Play on click
@@ -164,7 +183,7 @@ const AudioComponent = () => {
           isPlaying={isPlaying}
         />
       )}
-    </View>
+    </SafeAreaView>
   );
 };
 
